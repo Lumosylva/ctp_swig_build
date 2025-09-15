@@ -170,6 +170,7 @@ ctp/
 ## 6. 后续工作
 
 **提示 import \_\_builtin\_\_ 错误**
+
 当你打开 `thostmduserapi.py` 或 `thosttraderapi.py` 时，可能会出现以下错误
 
 ![thostmduserapi_error](/assets/thostmduserapi_error.png)
