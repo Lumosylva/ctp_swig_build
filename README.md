@@ -46,6 +46,8 @@ thosttraderapi_se.lib
 
    **方式一：全局安装(推荐方式，二选一)**
 
+   在PowerShell运行下述命令(注意不是cmd)
+
    ```bash
    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
@@ -62,7 +64,7 @@ thosttraderapi_se.lib
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
-2. 安装 Python(方式一进行这一步，方式二直接跳过)，我自己用的是 3.13.6，你可以安装自己需要的版本
+3. 安装 Python(方式一进行这一步，方式二直接跳过)，我自己用的是 3.13.6，你可以安装自己需要的版本
 
    ```bash
    uv python install 3.13
@@ -106,10 +108,10 @@ build.py文件：
 1. 激活 Python 虚拟环境：
 
    ```bash
-.venv\Scripts\activate
+   .venv\Scripts\activate
    ```
 
-1. 运行构建：
+2. 运行构建：
 
    ```bash
    python build.py
@@ -121,7 +123,7 @@ build.py文件：
    python build.py --clean
    ```
 
-1. 测试：
+3. 测试：
 
    demo文件为 `ctp_demo.py`，运行即可。
 
