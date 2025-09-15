@@ -70,6 +70,13 @@ thosttraderapi_se.lib
    uv python install 3.13
    ```
 
+4. 在项目根目录运行下属命令将Python环境安装到项目根目录(与全局安装的Python隔离)
+
+   ```bash
+   uv venv --python 3.13 .venv
+   ```
+
+
 ## 4. 使用
 
 使用 `SWIG + MSVC + Meson + Stubgen` 的组合来编译CTP C++ API生成Python扩展模块。
