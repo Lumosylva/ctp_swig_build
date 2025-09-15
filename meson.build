@@ -1,0 +1,81 @@
+project(
+  'ctp-swig-build',
+  'cpp',
+  version : '6.7.8.1',
+  license: 'MIT',
+  meson_version: '>=1.9.0',
+  default_options : [
+    'warning_level=2',  # 警告级别
+    'cpp_std=c++17',
+    'buildtype=release',
+    'optimization=2'
+  ]
+)
+
+# 查找Python解释器和开发文件
+py_mod = import('python')
+py = py_mod.find_installation('python3')
+py_dep = py.dependency()
+
+# 获取编译器信息
+cpp = meson.get_compiler('cpp')
+
+# 输出构建目标系统信息
+message('构建目标系统: ' + host_machine.system())
+
+# 查找SWIG
+swig = find_program('swig', required: true)
+
+# 设置包含目录
+ctp_inc = include_directories('ctp')
+
+# 定义SWIG源文件和目标
+swig_sources = [
+  ['ctp/thostmduserapi.i', 'thostmduserapi'],
+  ['ctp/thosttraderapi.i', 'thosttraderapi']
+]
+
+# 为每个SWIG模块生成包装代码和编译模块
+foreach swig_source : swig_sources
+  swig_file = swig_source[0]
+  module_name = swig_source[1]
+  
+  # 生成SWIG包装代码
+  swig_wrapper = custom_target(module_name + '_wrap',
+    input : swig_file,
+    output : [module_name + '_wrap.cxx', module_name + '.py'],
+    command : [swig, '-threads', '-c++', '-python', 
+               '-I@SOURCE_ROOT@/ctp/include',
+               '-outdir', '@OUTDIR@',
+               '-o', '@OUTPUT0@',
+               '@INPUT@'],
+    build_by_default : true)
+  
+  # 设置库文件路径
+  lib_name = 'thostmduserapi_se'
+  if module_name == 'thosttraderapi'
+    lib_name = 'thosttraderapi_se'
+  endif
+  
+  # 编译Python扩展模块
+  py_ext = py.extension_module(module_name,
+    swig_wrapper[0],  # SWIG生成的C++文件
+    include_directories : ctp_inc,
+    dependencies : [py_dep],
+    link_args : [meson.current_source_dir() + '/ctp/' + lib_name + '.lib'],
+    cpp_args : [
+      '-D_CRT_SECURE_NO_WARNINGS',
+      '-D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING',
+      '/bigobj',          # 支持大文件编译
+      '/wd4819',          # 禁用C4819警告（字符编码警告）
+      '/wd4828',          # 禁用C4828警告（UTF-8字符无效警告）
+      '/wd4267',          # 禁用size_t转换警告
+      '/wd4244',          # 禁用数据类型转换警告
+      '/source-charset:GB2312',  # 源文件字符集
+      '/execution-charset:GB2312' # 执行字符集
+    ],
+    install : true,
+    install_dir : meson.current_source_dir() + '/ctp')
+endforeach
+
+# 注意：DLL文件已经在项目ctp目录中，不需要重复安装
