@@ -1,7 +1,7 @@
 # 项目说明
 **一句话介绍项目**：一键自动编译CTP C++接口为Python接口。
 
-**Tips**: 如果你需要使用 Pybind11 编译方式，参考本人项目：https://github.com/Homalos/ctp
+**Tips**: 如果你需要使用 Pybind11 编译方式，参考另外一个项目：https://github.com/Homalos/ctp
 
 ## 1. 前言
 
