@@ -179,3 +179,8 @@ ctp/
 
 ![thostmduserapi_no_error](/assets/thostmduserapi_no_error.png)
 
+手动编译教程：
+
+[CTP Python API 利用Swig 封装Windows版（traderapi）](https://blog.csdn.net/mdd2012/article/details/145290497)
+
+[CTP Python API 利用Swig 封装Windows版（mduserapi）](https://blog.csdn.net/mdd2012/article/details/145291662)
