@@ -3,7 +3,7 @@
 
 ## 1. 前言
 
-目前上期技术CTP接口提供的API版本是 `C++` 版本，本文主要介绍在Windows 64位平台下利用Swig工具将CTP C++接口转换为Python可调用的接口。
+目前上期技术CTP接口提供的API版本是 C++版本，本文主要介绍在Windows 64位平台下利用Swig工具将CTP C++接口转换为Python可调用的接口。
 
 ## 2. 准备工作
 
@@ -34,7 +34,7 @@ thosttraderapi_se.lib
 
 - **安装 Visual Studio**
 
-  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是**Visual Studio 2022**。
+  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是**Visual Studio 2022**，注意安装Visual Studio的时候勾选上C++开发。
 
 ## 3. 安装UV和Python环境
 
@@ -79,7 +79,7 @@ thosttraderapi_se.lib
 
 ## 4. 使用
 
-使用 `SWIG + MSVC + Meson + Stubgen` 的组合来编译CTP C++ API生成Python扩展模块。
+项目使用 `SWIG + MSVC + Meson + Stubgen` 的组合来编译CTP C++ API生成Python扩展模块。
 
 ### 主要功能：
 
@@ -124,12 +124,6 @@ build.py文件：
    python build.py
    ```
 
-   或
-
-   ```bash
-   python build.py --clean
-   ```
-
 3. 测试：
 
    demo文件为 `ctp_demo.py`，运行即可。
@@ -142,17 +136,16 @@ build.py文件：
 - ✅ 生成类型存根文件提供IDE支持
 - ✅ 支持Windows MSVC编译环境
 - ✅ 自动复制必要的文件
+- ✅ 无需打开Visual Studio即可实现一键编译
 
-构建脚本会自动：
+构建脚本将会自动：
 
 - 编译生成pyd文件
 - 复制到项目根目录的ctp文件夹
 - 自动重命名，在文件名前添加下划线
 - 同时处理相关的.lib文件
 
-这样可以确保SWIG生成的Python模块能够正确找到并导入底层的C扩展模块！
-
-构建完成后，将得到完整的Python扩展模块，可以直接在Python代码中使用CTP API的所有功能。
+这样可以确保SWIG生成的Python模块能够正确找到并导入底层的C扩展模块，构建完成后，将得到完整的Python扩展模块，可以直接在Python代码中使用CTP API的所有功能。
 
 ## 5. 项目结构
 
