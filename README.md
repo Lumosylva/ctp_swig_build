@@ -167,3 +167,14 @@ ctp/
 └── ...其他文件
 ```
 
+## 6. 后续工作
+
+**提示 import \__builtin__ 错误**
+当你打开 `thostmduserapi.py` 或 `thosttraderapi.py` 时，可能会出现以下错误
+
+![thostmduserapi_error](/assets/thostmduserapi_error.png)
+
+只需改为以下代码即可解决：
+
+![thostmduserapi_no_error](/assets/thostmduserapi_no_error.png)
+
