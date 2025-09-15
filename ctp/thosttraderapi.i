@@ -45,7 +45,6 @@ const static locale g_loc("zh_CN.GB18030");
 %ignore THOST_FTDC_FTC_BrokerLaunchBankToBroker;
 %ignore THOST_FTDC_FTC_BankLaunchBrokerToBank;
 %ignore THOST_FTDC_FTC_BrokerLaunchBrokerToBank;  
-%feature("director") CThostFtdcTraderSpi; 
 %include "ThostFtdcUserApiDataType.h"
 %include "ThostFtdcUserApiStruct.h" 
 %include "ThostFtdcTraderApi.h"
