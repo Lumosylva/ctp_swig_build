@@ -1,5 +1,5 @@
 # ctp_swig_build
-**一句话介绍本项目**：实现一键自动编译CTP C++接口为Python接口。
+**一句话介绍项目**：一键自动编译CTP C++接口为Python接口。
 
 ## 1. 前言
 
@@ -26,11 +26,11 @@ thosttraderapi_se.lib
 
 - **安装 Swig**
 
-  本文中所用的Swig是**`swigwin-4.3.0`**版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)。更多Swig版本[下载地址](https://sourceforge.net/projects/swig/files/swigwin/)
+  本文中所用的Swig是 **`swigwin-4.3.0`** 版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)，更多Swig版本[下载地址](https://sourceforge.net/projects/swig/files/swigwin/)
 
 - **安装 Python**
 
-  推荐使用`UV`来安装，下面有使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位版本，将环境变量配置好。本文所用的是**`3.13.6`**版本，如果自用到别的版本，下列步骤一致。
+  推荐使用`UV`来安装，下面有使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位版本，将环境变量配置好。本文所用的是 **`3.13.6`** 版本，如果自用到别的版本，下列步骤一致。
 
 - **安装 Visual Studio**
 
@@ -46,7 +46,7 @@ thosttraderapi_se.lib
 
    **方式一：全局安装(推荐方式，二选一)**
 
-   在PowerShell运行下述命令(注意不是cmd)
+   在PowerShell中运行下述命令(注意不是cmd)
 
    ```bash
    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
@@ -70,7 +70,7 @@ thosttraderapi_se.lib
    uv python install 3.13
    ```
 
-4. 在项目根目录运行下述命令将Python环境安装到项目根目录(与上一步全局安装的Python隔离)
+4. 在项目根目录运行下述命令将 Python 虚拟环境安装到项目根目录(与上一步全局安装的 Python 隔离)
 
    ```bash
    uv venv --python 3.13 .venv
