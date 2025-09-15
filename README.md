@@ -26,7 +26,7 @@ thosttraderapi_se.lib
 
 - **安装 Swig**
 
-  本文中所用的Swig是 **`swigwin-4.3.0`** 版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)，更多Swig版本[下载地址](https://sourceforge.net/projects/swig/files/swigwin/)
+  本文中所用的Swig是 **`swigwin-4.3.0`** 版本，[点击此处下载](https://zenlayer.dl.sourceforge.net/project/swig/swigwin/swigwin-4.3.0/swigwin-4.3.0.zip?viasf=1)，更多Swig版本[下载地址](https://sourceforge.net/projects/swig/files/swigwin/)。
 
 - **安装 Python**
 
@@ -124,7 +124,7 @@ build.py文件：
    python build.py
    ```
 
-3. 测试：
+3. 测试接口：
 
    demo文件为 `ctp_demo.py`，运行即可。
 
