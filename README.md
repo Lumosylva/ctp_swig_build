@@ -72,10 +72,11 @@ thosttraderapi_se.lib
    uv python install 3.13
    ```
 
-4. 在项目根目录运行下述命令将 Python 虚拟环境安装到项目根目录(与上一步全局安装的 Python 隔离)
+4. 在项目根目录运行下述命令将 Python 虚拟环境安装到项目根目录(与上一步全局安装的 Python 隔离)，同时安装项目依赖并生成或更新锁文件 `uv.lock`，以确保环境的一致性。`uv sync` 安装的依赖包主要根据**`pyproject.toml`**文件来定义。
 
    ```bash
    uv venv --python 3.13 .venv
+   uv sync
    ```
 
 
