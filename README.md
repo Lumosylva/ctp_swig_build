@@ -151,19 +151,19 @@ build.py文件：
 
 ```reStructuredText
 ctp/
-├── _thostmduserapi.cp313-win_amd64.pyd  # 重命名后的行情API模块
-├── _thostmduserapi.cp313-win_amd64.lib  # 重命名后的库文件
-├── _thosttraderapi.cp313-win_amd64.pyd  # 重命名后的交易API模块
-├── _thosttraderapi.cp313-win_amd64.lib  # 重命名后的库文件
-├── thostmduserapi.i				     # 接口文件，用于告诉swig为哪些类和方法创建接口。
-├── thosttraderapi.i				     # 接口文件，用于告诉swig为哪些类和方法创建接口。
-├── thostmduserapi.py                    # SWIG生成的Python接口
-├── thosttraderapi.py                    # SWIG生成的Python接口
-├── thostmduserapi.pyi				     # 利用mypy自带的stubgen生成类型存根文件
-├── thosttraderapi.pyi				     # 利用mypy自带的stubgen生成类型存根文件
-├── __init__.py                          # Python包初始化文件
-├── thostmduserapi_se.dll               # 行情API动态库
-├── thosttraderapi_se.dll               # 交易API动态库
+├── _thostmduserapi.cp313-win_amd64.pyd		# 重命名后的行情API模块
+├── _thostmduserapi.cp313-win_amd64.lib		# 重命名后的库文件
+├── _thosttraderapi.cp313-win_amd64.pyd		# 重命名后的交易API模块
+├── _thosttraderapi.cp313-win_amd64.lib		# 重命名后的库文件
+├── thostmduserapi.i		# 接口文件，用于告诉swig为哪些类和方法创建接口。
+├── thosttraderapi.i		# 接口文件，用于告诉swig为哪些类和方法创建接口。
+├── thostmduserapi.py		# SWIG生成的Python接口
+├── thosttraderapi.py		# SWIG生成的Python接口
+├── thostmduserapi.pyi		# 利用mypy自带的stubgen生成类型存根文件
+├── thosttraderapi.pyi		# 利用mypy自带的stubgen生成类型存根文件
+├── __init__.py				# Python包初始化文件
+├── thostmduserapi_se.dll	# 行情API动态库
+├── thosttraderapi_se.dll	# 交易API动态库
 └── ...其他文件
 ```
 
