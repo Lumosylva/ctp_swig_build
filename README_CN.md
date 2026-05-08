@@ -10,6 +10,7 @@
   简体中文 |
   <a href="README.md">English</a>
 </p>
+
 # 项目说明
 
 目前上期技术 CTP 接口提供的API版本是 C++ 版本，本文主要介绍在 Windows 64 位平台下利用 Swig 工具将 CTP C++ 接口转换为 Python可调用的接口。根据原生CTP C++ API 自动化包装为 Python API，便于 CTP Python 开发者维护最新的 CTP 接口，实现 CTP 版本的快速升级。
