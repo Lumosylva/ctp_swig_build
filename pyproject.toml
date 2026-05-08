@@ -1,7 +1,7 @@
 [project]
-name = "ctp-swig-build"
+name = "ctp-swig"
 dynamic = ["version"]
-description = "一键实现自动编译CTP C++接口为Python接口"
+description = "Automatically Compile the CTP C++ Interface into a Python Interface"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
@@ -13,6 +13,7 @@ dependencies = [
     "meson-python>=0.18.0",
     "mypy>=1.18.1",
     "swig>=4.4.1",
+    "twine>=6.2.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
