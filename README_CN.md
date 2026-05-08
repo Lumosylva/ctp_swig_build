@@ -1,4 +1,4 @@
-<h1 align="center">ctp_swig_build</h1>
+<h1 align="center">ctp-swig</h1>
 
 <p align="center">
 ✨ 一键实现自动编译 CTP API C++ 和 Python 接口的绑定 ✨
@@ -10,178 +10,33 @@
   简体中文 |
   <a href="README.md">English</a>
 </p>
-**一句话介绍本项目**：一键实现自动编译 CTP API C++ 和 Python 接口的绑定。
+# 项目说明
+
+目前上期技术 CTP 接口提供的API版本是 C++ 版本，本文主要介绍在 Windows 64 位平台下利用 Swig 工具将 CTP C++ 接口转换为 Python可调用的接口。根据原生CTP C++ API 自动化包装为 Python API，便于 CTP Python 开发者维护最新的 CTP 接口，实现 CTP 版本的快速升级。
+
+**注意**：本项目未做详尽测试，请自行测试。
 
 戳这里可以直接体验编译好的 Python API 文件：
 
 - [Github Releases](https://github.com/ctp-api/ctp-swig/releases)
 - [GitCode Releases](https://gitcode.com/ctp-api/ctp-swig/releases)
 
-**Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：
+## 1. 编译环境
 
-https://github.com/ctp-api/ctp-pybind
+本项目使用以下环境编译，若自行使用其它版本，请做相应调整。
 
-https://gitcode.com/ctp-api/ctp-pybind
+- **Windows 11 + MSVC**(由Visual Studio 2022提供)
+- **Python 3.13.6**，由 UV 安装。
+- **CTP v6.7.11**：[CTP官方下载地址](https://www.simnow.com.cn/static/apiDownload.action)
+- **Meson + Ninja**: 现代化的C++扩展构建系统。
+- **Swig**: 用于在 C++ 和 Python 之间创建绑定。
+- **UV**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
 
-本文档末尾有 Swig 编译方式与 Pybind11 编译方式的对比，国内著名量化开源框架 vn.py 底层就是使用的 Pybind11 编译方式。
-
-技术栈：Python + Swig + MSVC + meson-python + mypy
-
-环境： 
-
-Windows：Visual Studio 2022(安装时勾选 C++ 开发，主要提供 MSVC + Win SDK 支持)
-
-Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译成功)
-
-## 1. 前言
-
-目前上期技术CTP接口提供的API版本是 C++版本，本文主要介绍在Windows 64位平台下利用 Swig 工具将CTP C++接口转换为Python可调用的接口。
-
-## 2. 准备工作
-
-- **下载官方 CTP API**
-
-  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action) PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.11` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
-
-![ctp_download](assets/ctp_download.png)
-
-  64位的API文件包解压后清单如下：
-
-![ctp_zip](assets/ctp_zip.png)
-
-- 下载本项目
-
-  使用 `git clone` 或者  `Download ZIP` (在 gitcode 上是点击**下载zip**)将本项目下载到本地，然后将上述下载的所有 API 文件(总共10个文件)复制替换项目 **ctp_source** 内原有的文件，如图：
-
-  ![ctp_files](assets/ctp_source.jpg)
-
-- **安装 Python**
-
-  推荐使用 `UV` 来安装，下面有UV的安装使用说明。也可以使用其他 Python 管理工具，但是需自行配置相关环境。注意要安装64位Python版本，将环境变量配置好。本文所用的是 **`3.13.6`** 版本，如果自用到别的版本，下列步骤一致。
-
-- **安装 Visual Studio**(Winodws环境安装，Linux环境安装GCC)
-
-  主要是用到其中的 `MSVC` 和 `Ninja`，本文所用的是 **Visual Studio 2022**，注意安装 Visual Studio 的时候勾选上 **C++** 开发。
-
-## 3. 安装UV和Python环境   
-
-本项目推荐使用 `UV` 来管理 Python 安装和依赖包安装
-
-1. 安装UV
-
-   i. 在Windows系统
-
-   **方式一：全局安装(推荐方式，二选一)**
-
-   在PowerShell中运行下述命令(注意不是cmd)
-
-   ```bash
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
-
-   **方式二：单独在 Python 环境中安装(二选一)**
-
-   ```bash
-   pip install uv
-   ```
-
-   ii. 在Linux系统
-
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
-
-3. 安装 Python(方式一进行这一步，方式二直接跳过)，你可以安装自己需要的版本
-
-   ```bash
-   uv python install 3.13
-   ```
-
-3. 在项目根目录下安装Python虚拟环境及依赖，以确保环境的一致性。`uv sync` 安装的Python版本由 `.python-version`及 `pyproject.toml` 文件中的配置决定，uv会自动将你前述步骤安装的Python隔离安装在项目根目录下，名称为 `.venv`。
-
-   ```bash
-   uv sync
-   ```
-
-
-## 4. 使用
-
-### 使用方法：
-
-1. 激活 Python 虚拟环境：
-
-   ```bash
-   .venv\Scripts\activate
-   ```
-
-2. 运行构建：
-
-   ```bash
-   python build.py
-   ```
-
-3. 测试编译：
-
-   demo文件为 `ctp_demo.py`，运行这个即可。
-
-## 5. 执行结果
-
-运行 `python build.py` 结果：
-
-![build1](assets/build1.png)
-
-![build2](assets/build2.png)
-
-运行编译脚本后，Python API 编译产物将会生成在项目 **ctp_api** 目录下
-
-运行 `ctp_demo.py` 可以看到编译测试结果：
-
-![demo_result](assets/demo_result.png)
-
-## 6. 编译脚本主要做了什么：
-
-`build.py`文件：
-
-- 检查所有必要的依赖项（SWIG、Meson、Ninja）
-- 自动设置和清理构建目录
-- 配置Meson构建（支持MSVC环境）
-- 执行编译和安装过程，编译生成pyd文件
-- pyd文件复制到项目根目录的ctp文件夹
-- 自动重命名，在文件名前添加下划线
-- 同时处理相关的.lib文件
-- 使用mypy自带的stubgen生成类型存根文件
-- 提供了多种命令行选项（仅配置、跳过存根生成等）
-
-`meson.build`文件：
-
-- 配置了C++17编译环境
-
-- 自动查找Python解释器和SWIG工具
-
-- 为行情API（thostmduserapi）和交易API（thosttraderapi）分别配置SWIG包装代码生成
-
-- 设置了正确的包含目录和库文件链接
-
-- 自动安装生成的Python文件和DLL文件
-
-
-### 主要特点：
-
-- ✅ 支持多线程（-threads参数）
-- ✅ 自动处理中文编码转换
-- ✅ 生成类型存根文件提供IDE支持
-- ✅ 支持Windows MSVC编译环境
-- ✅ 自动复制必要的文件
-- ✅ 无需打开Visual Studio即可实现一键编译
-
-这样可以确保SWIG生成的Python模块能够正确找到并导入底层的C扩展模块，构建完成后，将得到完整的Python扩展模块，可以直接在Python代码中使用CTP API的所有功能。
-
-## 7. 项目结构
+## 2. 项目结构
 
 ```reStructuredText
-ctp_swig_build/
+/
 ├── 📁 assets/			# 资源文件夹，包含一些图片
-├── 📁 build/			# 编译过程文件夹，不用关注
 ├── 📁 ctp_api/			# CTP API 编译产物文件夹，存放编译出的Python API相关文件
 │   ├── 📁 __init__.py
 │   ├── 📁 _thostmduserapi.cp313-win_amd64.pyd	# 行情API模块，由编译脚本自动生成
@@ -210,10 +65,140 @@ ctp_swig_build/
 ├── 📁 thostmduserapi.i		# 接口文件，用于告诉swig为哪些行情类和方法创建接口。
 ├── 📁 thosttraderapi.i		# 接口文件，用于告诉swig为哪些交易类和方法创建接口。
 ├── 📁 pyproject.toml		# Python项目管理配置文件，由UV自动生成，包含项目信息
-├── 📁 README.md			# 项目说明文档
+├── 📁 README.md			# 项目英文说明文档
+├── 📁 README_CN.md         # 项目中文说明文档
 ├── 📁 uv.lock				# UV锁定文件，由UV自动生成，不用关注
 └── 📁 ...					# 其他文件
 ```
+
+## 3. 准备工作
+
+- **下载官方 CTP API**
+
+  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action) PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.11` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
+
+![ctp_download](assets/ctp_download.png)
+
+  64位的API文件包解压后清单如下：
+
+![ctp_zip](assets/ctp_zip.png)
+
+- 下载本项目
+
+  使用 `git clone` 或者  `Download ZIP` (在 gitcode 上是点击**下载zip**)将本项目下载到本地，然后将上述下载的所有 API 文件(总共10个文件)复制替换项目 **ctp_source** 内原有的文件，如图：
+
+  ![ctp_files](assets/ctp_source.jpg)
+
+## 4. 安装基础环境
+
+### 4.1 安装UV
+
+#### 4.1.1 On Windows
+
+**方式一：全局安装(推荐方式)**
+
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**方式二：单独在 Python 环境中安装**
+
+```bash
+pip install uv
+```
+
+#### 4.1.2 On Linux
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 4.2 安装 Python
+
+方式一进行这一步，你可以安装自己需要的版本
+
+```bash
+uv python install 3.13
+```
+
+## 5. 使用
+
+### 5.1 命令安装
+
+```bash
+pip install ctp-swig
+```
+
+### 5.2 源码安装
+
+下载本项目 Release 源码或者 `git clone`
+
+#### 5.2.1 安装依赖
+
+```bash
+# 根目录下执行，将项目的依赖项与环境同步(同步Python版本及第三方依赖)
+uv sync
+```
+
+#### 5.2.2 生成 CTP API Python 绑定文件
+
+```bash
+# 激活 Python 虚拟环境
+.venv\Scripts\activate
+# 项目根目录执行，生成绑定文件
+python build.py
+```
+
+运行 `python build.py` 结果：
+
+![build1](assets/build1.png)
+
+![build2](assets/build2.png)
+
+运行编译脚本后，Python API 编译产物将会生成在项目 **ctp_api** 目录下
+
+## 6. Demo测试
+
+在 demo/ 下 `ctp_demo.py` 中填入 CTP 环境及 simonow 账户信息后运行，结果如下：
+
+![demo_result](assets/demo_result.png)
+
+## 7. 编译脚本主要做了什么：
+
+`build.py `脚本：
+
+- 检查所有必要的依赖项（SWIG、Meson、Ninja）
+- 自动设置和清理构建目录
+- 配置Meson构建（支持MSVC环境）
+- 执行编译和安装过程，编译生成 pyd 文件
+- pyd 文件复制到项目根目录的 ctp_api 文件夹
+- 自动重命名，在文件名前添加下划线
+- 同时处理相关的 .lib 文件
+- 使用 mypy 自带的 stubgen 生成类型存根文件
+- 提供了多种命令行选项（仅配置、跳过存根生成等）
+
+`meson.build`文件：
+
+- 配置了C++17编译环境
+
+- 自动查找Python解释器和SWIG工具
+
+- 为行情API（thostmduserapi）和交易API（thosttraderapi）分别配置SWIG包装代码生成
+
+- 设置了正确的包含目录和库文件链接
+
+- 自动安装生成的Python文件和DLL文件
+
+**主要特点**：
+
+- ✅ 支持多线程（-threads参数）
+- ✅ 自动处理中文编码转换
+- ✅ 生成类型存根文件提供IDE支持
+- ✅ 支持Windows MSVC编译环境
+- ✅ 自动复制必要的文件
+- ✅ 无需打开Visual Studio即可实现一键编译
+
+这样可以确保SWIG生成的Python模块能够正确找到并导入底层的C扩展模块，构建完成后，将得到完整的Python扩展模块，可以直接在Python代码中使用CTP API的所有功能。
 
 ## 8. 后续工作
 
@@ -222,6 +207,12 @@ ctp_swig_build/
 [CTP Python API 利用Swig 封装Windows版（traderapi）](https://blog.csdn.net/mdd2012/article/details/145290497)
 
 [CTP Python API 利用Swig 封装Windows版（mduserapi）](https://blog.csdn.net/mdd2012/article/details/145291662)
+
+**Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：
+
+https://github.com/ctp-api/ctp-pybind
+
+https://gitcode.com/ctp-api/ctp-pybind
 
 ## 9. 更多
 
@@ -294,11 +285,13 @@ Pybind11 和 SWIG 多个维度详细的比较
 
 *请在使用本系统前确保已完整阅读并理解上述条款。如有疑问，请咨询专业法律人士。*
 
-## 11. 交流学习
+## 11. 社区支持
 
-&ensp;[![QQ Group](https://img.shields.io/badge/QQ%20Group%231-Join-blue)](https://qun.qq.com/universal-share/share?ac=1&authKey=dzGDk%2F%2Bpy%2FwpVyR%2BTrt9%2B5cxLZrEHL793cZlFWvOXuV5I8szMnOU4Wf3ylap7Ph0&busi_data=eyJncm91cENvZGUiOiI0NDYwNDI3NzciLCJ0b2tlbiI6IlFrM0ZhZmRLd0xIaFdsZE9FWjlPcHFwSWxBRFFLY2xZbFhaTUh4K2RldisvcXlBckZ4NVIrQzVTdDNKUFpCNi8iLCJ1aW4iOiI4MjEzMDAwNzkifQ%3D%3D&data=O1Bf7_yhnvrrLsJxc3g5-p-ga6TWx6EExnG0S1kDNJTyK4sV_Nd9m4p-bkG4rhj_5TdtS5lMjVZRBv4amHyvEA&svctype=4&tempid=h5_group_info)
+- [![QQ Group](https://img.shields.io/badge/QQ%20Group%231-Join-blue)](https://qun.qq.com/universal-share/share?ac=1&authKey=dzGDk%2F%2Bpy%2FwpVyR%2BTrt9%2B5cxLZrEHL793cZlFWvOXuV5I8szMnOU4Wf3ylap7Ph0&busi_data=eyJncm91cENvZGUiOiI0NDYwNDI3NzciLCJ0b2tlbiI6IlFrM0ZhZmRLd0xIaFdsZE9FWjlPcHFwSWxBRFFLY2xZbFhaTUh4K2RldisvcXlBckZ4NVIrQzVTdDNKUFpCNi8iLCJ1aW4iOiI4MjEzMDAwNzkifQ%3D%3D&data=O1Bf7_yhnvrrLsJxc3g5-p-ga6TWx6EExnG0S1kDNJTyK4sV_Nd9m4p-bkG4rhj_5TdtS5lMjVZRBv4amHyvEA&svctype=4&tempid=h5_group_info)
+
+- [pypi.org](https://pypi.org/project/ctp-swig/)
 
 ------
 
-*ctp-swig-build* *最后更新日期: 2026-05-08*
+*ctp-swig* *最后更新日期: 2026-05-08*
 
