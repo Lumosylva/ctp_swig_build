@@ -1,7 +1,7 @@
 project(
   'ctp-swig-build',
   'cpp',
-  version : '6.7.10.1',
+  version : '6.7.11.1',
   license: 'MIT',
   meson_version: '>=1.9.0',
   default_options : [

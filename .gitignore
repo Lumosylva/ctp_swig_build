@@ -11,4 +11,3 @@ wheels/
 .venv
 .idea/
 .git/
-uv.lock

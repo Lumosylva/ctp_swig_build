@@ -1,25 +1,25 @@
 <h1 align="center">ctp_swig_build</h1>
 
 <p align="center">
-✨ 一键实现自动编译 CTP C++ 接口为 Python 接口 ✨
+✨ 一键实现自动编译 CTP API C++ 和 Python 接口的绑定 ✨
 </p>
+
 
 
 <p align="center">
   简体中文 |
   <a href="README.md">English</a>
 </p>
+**一句话介绍本项目**：一键实现自动编译 CTP API C++ 和 Python 接口的绑定。
 
-**一句话介绍本项目**：一键实现自动编译 CTP C++ 接口为 Python 接口。
+戳这里可以直接体验编译好的 Python API 文件：
 
-戳这里可以直接体验编译好的 Python API 文件(CTP v6.7.10)：
-
-- [Github Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
-- [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases/CTP_v6.7.10)
+- [Github Releases](https://github.com/ctp-api/ctp-swig-build/releases)
+- [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases)
 
 **Tips**：如果你对使用 Pybind11 编译方式感兴趣，可参考另外一个项目：
 
-https://github.com/Homalos/ctp
+https://github.com/ctp-api/ctp-pybind
 
 https://gitcode.com/Homalos/ctp
 
@@ -29,7 +29,7 @@ https://gitcode.com/Homalos/ctp
 
 环境： 
 
-Windows：Visual Studio 2022(安装时勾选 C++ 开发，主要提供 MSVC + Ninja 支持)
+Windows：Visual Studio 2022(安装时勾选 C++ 开发，主要提供 MSVC + Win SDK 支持)
 
 Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译成功)
 
@@ -41,7 +41,7 @@ Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译�
 
 - **下载官方 CTP API**
 
-  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action) PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.10` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
+  从 SimNow [官网](https://www.simnow.com.cn/static/apiDownload.action) PC标签页下载 CTP API 压缩包，注意非交易时间段此网站可能会出现不能访问，可在交易日访问。这里以 `v6.7.11` **看穿式监管生产版本**为例（你可以自行用需要的版本，步骤一样）
 
 ![ctp_download](assets/ctp_download.png)
 
@@ -54,10 +54,6 @@ Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译�
   使用 `git clone` 或者  `Download ZIP` (在 gitcode 上是点击**下载zip**)将本项目下载到本地，然后将上述下载的所有 API 文件(总共10个文件)复制替换项目 **ctp_source** 内原有的文件，如图：
 
   ![ctp_files](assets/ctp_source.jpg)
-
-  复制完成之后项目结构如下：
-
-  ![project](assets/project.jpg)
 
 - **安装 Python**
 
@@ -136,13 +132,11 @@ Linux：GCC(注意此项目在 Linux 环境下未做测试，不能保证编译�
 
 ![build2](assets/build2.png)
 
-![build3](assets/build3.png)
-
 运行编译脚本后，Python API 编译产物将会生成在项目 **ctp_api** 目录下
 
 运行 `ctp_demo.py` 可以看到编译测试结果：
 
-![demo_result](assets/demo_result.jpg)
+![demo_result](assets/demo_result.png)
 
 ## 6. 编译脚本主要做了什么：
 
@@ -209,8 +203,9 @@ ctp_swig_build/
 │   ├── 📁 thostmduserapi_se.lib		# 行情部分的静态链接库
 │   ├── 📁 thosttraderapi_se.dll		# 交易部分的动态链接库
 │   └── 📁 thosttraderapi_se.lib		# 交易部分的静态链接库
+├── 📁 demo/				# 编译demo
+│   └── 📁 ctp_demo.py		# 测试demo，运行可以测试编译是否成功
 ├── 📁 build.py				# 编译脚本
-├── 📁 ctp_demo.py			# 测试demo，运行可以测试编译是否成功
 ├── 📁 meson.build			# meson配置文件(不懂meson配置不用关注)
 ├── 📁 thostmduserapi.i		# 接口文件，用于告诉swig为哪些行情类和方法创建接口。
 ├── 📁 thosttraderapi.i		# 接口文件，用于告诉swig为哪些交易类和方法创建接口。
@@ -221,16 +216,6 @@ ctp_swig_build/
 ```
 
 ## 8. 后续工作
-
-**提示 import \_\_builtin\_\_ 错误**
-
-当你打开 `thostmduserapi.py` 或 `thosttraderapi.py` 时，可能会出现以下错误
-
-![thostmduserapi_error](assets/thostmduserapi_error.png)
-
-只需改为以下代码即可解决：
-
-![thostmduserapi_no_error](assets/thostmduserapi_no_error.png)
 
 手动编译教程：
 
@@ -315,4 +300,5 @@ Pybind11 和 SWIG 多个维度详细的比较
 
 ------
 
-*ctp_swig_build* *最后更新日期: 2025-11-21*
+*ctp-swig-build* *最后更新日期: 2026-05-08*
+

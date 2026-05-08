@@ -1,25 +1,25 @@
 <h1 align="center">ctp_swig_build</h1>
 
 <p align="center">
-✨ Enables one-click automatic compilation of CTP C++ interfaces into Python interfaces ✨
+✨ One-Click Automated Compilation of CTP API C++ and Python Bindings ✨
 </p>
+
 
 
 <p align="center">
   English |
   <a href="README_CN.md">简体中文</a>
 </p>
+**A brief introduction to this project:** One-Click Automated Compilation of CTP API C++ and Python Bindings.
 
-**A brief introduction to this project:** This project enables one-click automatic compilation of CTP C++ interfaces into Python interfaces.
+Click here to directly experience the compiled Python API file:
 
-Click here to directly experience the compiled Python API file (CTP v6.7.10):
-
-- [Github Releases](https://github.com/Lumosylva/ctp_swig_build/releases)
-- [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases/CTP_v6.7.10)
+- [Github Releases](https://github.com/ctp-api/ctp-swig-build/releases)
+- [GitCode Releases](https://gitcode.com/Lumosylva/ctp_swig_build/releases)
 
 **Tips:** If you are interested in using the Pybind11 compilation method, please refer to another project: 
 
-https://github.com/Homalos/ctp
+https://github.com/ctp-api/ctp-pybind
 
 https://gitcode.com/Homalos/ctp
 
@@ -41,7 +41,7 @@ Currently, the API version provided by the CTP interface in the previous issue i
 
 - **Download the Official CTP API**
 
-Download the CTP API compressed package from the [SimNow](https://www.simnow.com.cn/static/apiDownload.action) PC tab. Note that this website may be inaccessible outside of trading hours; it is accessible on trading days. This example uses `v6.7.10` **the production version with transparent monitoring** (you can use your desired version; the steps are the same).
+Download the CTP API compressed package from the [SimNow](https://www.simnow.com.cn/static/apiDownload.action) PC tab. Note that this website may be inaccessible outside of trading hours; it is accessible on trading days. This example uses `v6.7.11` **the production version with transparent monitoring** (you can use your desired version; the steps are the same).
 
 ![ctp_download](assets/ctp_download.png)
 
@@ -54,10 +54,6 @@ The unzipped 64-bit API file package looks like this:
   Use `git clone` or `Download ZIP` (on gitcode, click **Download ZIP**) to download this project to your local machine. Then, copy all the downloaded API files (10 files in total) and replace the existing files in the project's **ctp_source** folder, as shown in the image:
 
 ![ctp_files](assets/ctp_source.jpg)
-
-After copying, the project structure will look like this:
-
-![project](assets/project.jpg)
 
 (If you don't want to install SWIG from a binary file, you can also install it using `uv add swig` or `pip install swig`.)
 
@@ -137,13 +133,11 @@ Running `python build.py`:
 
 ![build2](assets/build2.png)
 
-![build3](assets/build3.png)
-
 After running the compilation script, the Python API compilation artifacts will be generated in the project's **ctp_api** directory.
 
 Running `ctp_demo.py` will display the compilation test results:
 
-![demo_result](assets/demo_result.jpg)
+![demo_result](assets/demo_result.png)
 
 ## 6. What the Compilation Script Mainly Does:
 
@@ -222,8 +216,9 @@ ctp_swig_build/
 │   ├── 📁 thostmduserapi_se.lib	# Static link library for market data section
 │   ├── 📁 thosttraderapi_se.dll	# Dynamic link library for the transaction section
 │   └── 📁 thosttraderapi_se.lib	# Static link library for the transaction section
+├── 📁 demo/				# Compilation Demo
+│   └── 📁 ctp_demo.py		# Test Demo (Run this to verify if the compilation was successful)
 ├── 📁 build.py                     # Compilation script
-├── 📁 ctp_demo.py                  # The test demo can be run to test whether the compilation was successful.
 ├── 📁 meson.build                  # Meson configuration file (Don't worry about this if you don't understand Meson configuration).
 ├── 📁 thostmduserapi.i		    	# The interface file is used to tell SWIG which market data classes and methods to create interfaces for.
 ├── 📁 thosttraderapi.i		    	# The interface file is used to tell SWIG which transaction classes and methods to create interfaces for.
@@ -234,16 +229,6 @@ ctp_swig_build/
 ```
 
 ## 8. Follow-up Work
-
-**Prompt: import \_\_builtin\_\_ error**
-
-When you open `thostmduserapi.py` or `thosttraderapi.py` When encountering this error, the following error may occur:
-
-![thostmduserapi_error](assets/thostmduserapi_error.png)
-
-Simply change the code to:
-
-![thostmduserapi_no_error](assets/thostmduserapi_no_error.png)
 
 Manual Compilation Tutorial:
 
@@ -335,4 +320,4 @@ This statement is governed by the laws of the People's Republic of China. Any di
 
 ------
 
-*ctp_swig_build* *Last updated: 2025-11-21*
+*ctp-swig-build* *Last updated: 2026-05-08*

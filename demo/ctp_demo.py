@@ -27,7 +27,7 @@ class CFtdcMdSpi(mdapi.CThostFtdcMdSpi):
         self.login_status: bool = False  # 登录状态
         self.connect_status: bool = False  # 连接状态
         # 订阅一些常用的期货合约（SimNow模拟环境中的活跃合约）
-        self.subscribe_symbol_list = ["SA601", "FG601"]
+        self.subscribe_symbol_list = ["SA609", "FG609"]
 
     def OnFrontConnected(self):
         """
@@ -147,11 +147,11 @@ class MarketData(object):
 if __name__ == '__main__':
     # CTP配置（使用SimNow测试环境）
     ctp_setting = {
-        "investor_id": "160219",      # 输入你的simnow用户名
-        "password": "Donny$1991",         # 输入你的simnow密码
+        "investor_id": "",      # 输入你的simnow用户名
+        "password": "",         # 输入你的simnow密码
         "broker_id": "9999",    # 经纪商代码
-        "md_address": "tcp://182.254.243.31:30011",     # 行情服务器地址
-        # "md_address": "tcp://182.254.243.31:40011",   # 7x24 行情服务器地址
+        # "md_address": "tcp://182.254.243.31:30011",     # 行情服务器地址
+        "md_address": "tcp://182.254.243.31:40011",   # 7x24 行情服务器地址
         "appid": "simnow_client_test",
         "auth_code": "0000000000000000"
     }
