@@ -15,4 +15,3 @@ wheels/
 con
 dist
 hatch_build.py
-meson.build
