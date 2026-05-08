@@ -13,3 +13,6 @@ wheels/
 .git/
 .cursor
 con
+dist
+hatch_build.py
+meson.build
